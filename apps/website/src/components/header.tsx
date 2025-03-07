@@ -31,6 +31,8 @@ import {
 } from "react-icons/md";
 import { DynamicImage } from "./dynamic-image";
 import { LogoIcon } from "./logo-icon";
+import { UserInfo } from '@/components/UserInfo';
+import { useAuth } from '@/contexts/AuthContext';
 
 const listVariant = {
   show: {
@@ -50,6 +52,7 @@ const itemVariant = {
 };
 
 export function Header() {
+  const { user, logout } = useAuth();
   const pathname = usePathname();
   const [isOpen, setOpen] = useState(false);
   const [showBlur, setShowBlur] = useState(false);
@@ -86,56 +89,66 @@ export function Header() {
       setHidden(false);
     }, 100);
   };
-
+  
   const links = [
     {
       title: "Dashboard",
       path: "/Dashboard",
+      id: "dashboard"
     },
     {
-      title: "AI-Advisor",
-      path: "/ai-advisor",
+      title: "Watchlist",
+      path: "/watchlist",
+      id: "watchlist"
     },
-    
     {
       title: "Market Overview",
       path: "/MarketOverview",
+      id: "market-overview"
     },
-    {
-      title: "Portfolio",
-      path: "/Portfolio",
-    },
+    ...(user ? [
+      {
+        title: "Portfolio",
+        path: "/Portfolio",
+        id: "portfolio"
+      },
+    ] : []),
     {
       title: "Docs",
-    
+      id: "docs",
       cover: (
         <Link href="/engine" onClick={handleOnClick}>
-          
+          {/* Your existing cover content */}
         </Link>
       ),
       children: [
         {
-          path: "",
+          path: "/opensource",
+          id: "opensource",
           title: "Open Source",
           icon: <FaGithub size={19} />,
         },
         {
           path: "/engine",
+          id: "engine",
           title: "Engine",
           icon: <MdOutlineMemory size={20} />,
         },
         {
+          path: "/community",
+          id: "community",
           title: "Join the community",
-          path: "",
           icon: <FaDiscord size={19} />,
         },
         {
+          path: "/integrations",
+          id: "integrations",
           title: "Apps & Integrations",
-          path: "",
           icon: <MdOutlineIntegrationInstructions size={20} />,
         },
         {
           path: "/components",
+          id: "components",
           title: "Components",
           icon: <MdOutlineDashboardCustomize size={20} />,
         },
@@ -144,9 +157,11 @@ export function Header() {
     {
       title: "Premium",
       path: "/Subscribe",
+      id: "premium"
     },
-  
   ];
+
+
 
   if (pathname.includes("pitch")) {
     return null;
@@ -297,12 +312,24 @@ export function Header() {
           </svg>
         </button>
 
-        <a
-          className="text-sm font-medium pr-2 border-l-[1px] border-border pl-4 hidden md:block"
-          href=""
-        >
-          Sign in
-        </a>
+        {user ? (
+          <div className="hidden md:flex items-center space-x-4 border-l border-border pl-4">
+            
+            <button
+              onClick={logout}
+              className="text-sm font-medium hover:opacity-70 transition-opacity"
+            >
+              Sign out
+            </button>
+          </div>
+        ) : (
+          <Link
+            className="text-sm font-medium pr-2 border-l border-border pl-4 hidden md:block hover:opacity-70 transition-opacity"
+            href="/login"
+          >
+            Sign in
+          </Link>
+        )}
       </nav>
 
       {isOpen && (

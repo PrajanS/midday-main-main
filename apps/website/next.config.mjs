@@ -1,5 +1,8 @@
-/** @type {import("next").NextConfig} */
+/** @type {import('next').NextConfig} */
 const config = {
+  env: {
+    DATABASE_URL: process.env.DATABASE_URL,
+  },
   poweredByHeader: false,
   reactStrictMode: true,
   transpilePackages: ["@midday/ui", "@midday/tailwind", "next-mdx-remote"],

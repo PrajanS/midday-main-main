@@ -15,14 +15,8 @@ export function StartPage() {
   return (
     <>
       <Hero />
-      {/*<SectionOne />
-      <SectionTwo />
-      <SectionThree />
-      <SectionFour />
-      <SectionFive />*/}
       <SectionSix />
       <SectionSeven />
-      
       <Testimonials />
     </>
   );

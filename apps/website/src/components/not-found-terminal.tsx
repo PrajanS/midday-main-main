@@ -1,5 +1,5 @@
 import { NotFoundStatuses } from "./not-found-statuses";
-import { StatusWidget } from "./status-widget";
+
 
 export function NotFoundTerminal() {
   return (
@@ -8,7 +8,7 @@ export function NotFoundTerminal() {
         <span className="loading-ellipsis">Data failed...</span>
 
         <div className="flex space-x-2 ml-auto">
-          <StatusWidget />
+          
         </div>
       </div>
 
